@@ -1,0 +1,38 @@
+﻿@page
+@model EHR.Pages.MyPrescriptionsModel
+@{
+    ViewData["Title"] = "My Prescriptions";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center text-primary mb-4">💊 My Medical Prescriptions</h2>
+
+    @if (Model.Prescriptions.Count > 0)
+    {
+            <table class="table table-bordered">
+                <thead class="table-primary">
+                    <tr>
+                        <th>Doctor</th>
+                        <th>Prescription</th>
+                        <th>Date Issued</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model.Prescriptions)
+                {
+                        <tr>
+                            <td>@item.DoctorName</td>
+                            <td>@item.PrescriptionText</td>
+                            <td>@item.DateIssued.ToString("yyyy-MM-dd HH:mm")</td>
+                        </tr>
+                }
+                </tbody>
+            </table>
+    }
+    else
+    {
+            <div class="alert alert-info text-center">
+                No prescriptions found.
+            </div>
+    }
+</div>

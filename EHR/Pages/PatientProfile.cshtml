@@ -1,0 +1,24 @@
+﻿
+@page "{id:int?}"
+@model PatientProfileModel
+@{
+    ViewData["Title"] = "Patient Profile";
+    Layout = "_Layout";
+}
+
+<h1>Patient Profile</h1>
+
+@if (Model.Patient != null)
+{
+    <ul>
+           <li><b>Name:</b> @($"{Model.Patient.FirstName} {Model.Patient.LastName}")</li>
+    <li><b>Email:</b> @Model.Patient.Email</li>
+    <li><b>Gender:</b> @Model.Patient.Gender</li>
+    <li><b>Date of Birth:</b> @Model.Patient.DateOfBirth.ToShortDateString()</li>
+    
+    </ul>
+}
+else
+{
+    <p>No patient data found.</p>
+}

@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - EHR</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/EHR.styles.css" asp-append-version="true" />
+    <style>
+        /* تغيير لون الشريط العلوي إلى اللون الأزرق */
+        .navbar {
+            background-color: #007bff !important;
+        }
+
+        /* تغيير لون النص في الشريط العلوي */
+        .navbar-brand, .navbar-nav .nav-link {
+            color: white !important;
+        }
+
+        /* تأثير الأزرار عند التمرير */
+        .navbar-nav .nav-link:hover {
+            color: #ffcc00 !important;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+
+                <a class="navbar-brand" asp-area="" asp-page="/Index">EHR</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Index" data-translate="home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy" data-translate="privacy">Privacy</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 🌐 أزرار تغيير اللغة -->
+    <div style="text-align:right; padding:10px; direction:ltr;">
+        <button class="btn btn-sm btn-outline-primary" onclick="setLanguage('en')">English</button>
+        <button class="btn btn-sm btn-outline-success" onclick="setLanguage('ar')">العربية</button>
+    </div>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 1447 - EHR - <a asp-area="" asp-page="/Privacy" data-translate="privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <!-- ✅ كود الترجمة -->
+    <script>
+        // تحميل اللغة المحفوظة عند فتح الصفحة
+        window.onload = function () {
+            const savedLang = localStorage.getItem('siteLang') || 'en';
+            setLanguage(savedLang);
+        };
+
+        // تغيير اللغة وتخزينها
+        function setLanguage(lang) {
+            document.documentElement.lang = lang;
+            localStorage.setItem('siteLang', lang);
+
+            if (lang === 'ar') {
+                document.body.style.direction = 'rtl';
+                document.body.style.textAlign = 'right';
+                translateToArabic();
+            } else {
+                document.body.style.direction = 'ltr';
+                document.body.style.textAlign = 'left';
+                translateToEnglish();
+            }
+        }
+
+
+        function translateToEnglish() {
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                el.innerText = translations[el.getAttribute('data-translate')]['en'];
+            });
+        }
+
+        // النصوص بالعربية
+        function translateToArabic() {
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                el.innerText = translations[el.getAttribute('data-translate')]['ar'];
+            });
+        }
+
+        const translations = {
+            home: { en: "Home", ar: "الرئيسية" },
+            privacy: { en: "Privacy", ar: "الخصوصية" }
+               doctor_dashboard: { en: "Doctor Dashboard", ar: "لوحة الطبيب" },
+               appointment_list: { en: "List of New Appointments", ar: "قائمة المواعيد الجديدة" }
+        };
+        };
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

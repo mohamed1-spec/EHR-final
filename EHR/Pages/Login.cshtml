@@ -1,0 +1,35 @@
+﻿@page
+@model EHR.Pages.LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h2>Login</h2>
+
+<form method="post" autocomplete="off">
+    <div class="form-group">
+        <label>Username / ID</label>
+        <input asp-for="Username" class="form-control" placeholder="Enter your username" />
+    </div>
+
+    <div class="form-group">
+        <label>Password</label>
+        <input asp-for="Password" type="password" class="form-control" placeholder="Enter your password" />
+        <a asp-page="/ForgotPassword" class="text-decoration-none">Forgot your password?</a>
+    </div>
+
+    <div class="form-group">
+      
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100 mt-3">Login</button>
+
+    <p class="mt-3">
+        Don't have an account? <a asp-page="/Register">Register</a>
+    </p>
+</form>
+
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+        <div class="alert alert-info mt-3">@Model.Message</div>
+}

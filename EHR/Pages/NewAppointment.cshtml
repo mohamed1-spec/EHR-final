@@ -1,0 +1,77 @@
+﻿@page
+@model EHR.Pages.NewAppointmentModel
+@{
+    ViewData["Title"] = "Book New Appointment";
+    Layout = "_Layout";
+}
+
+<div class="container mt-5" style="max-width:700px;">
+    <h2 class="mb-4 text-center">Book New Appointment</h2>
+
+    <form method="post">
+       
+        <div class="mb-3">
+            <label class="form-label">Describe your health issue</label>
+            <textarea asp-for="HealthIssue" class="form-control" rows="3"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Select Department</label>
+            <select asp-for="Department" class="form-select">
+                <option>General Medicine</option>
+                <option>Internal Medicine</option>
+                <option>Pediatrics</option>
+                <option>Ophthalmology (Eye)</option>
+                <option>Orthopedics (Bones)</option>
+                <option>Cardiology</option>
+                <option>Dermatology (Skin)</option>
+                <option>ENT (Ear, Nose, Throat)</option>
+                <option>Neurology</option>
+                <option>Psychiatry</option>
+                <option>Dental</option>
+                <option>Gynecology</option>
+            </select>
+        </div>
+
+       
+        <div class="mb-3">
+            <label class="form-label">Age</label>
+            <input asp-for="Age" type="number" class="form-control" />
+        </div>
+
+        
+        <div class="mb-3">
+            <label class="form-label">Weight (kg)</label>
+            <input asp-for="Weight" type="number" class="form-control" />
+        </div>
+
+        
+        <div class="mb-3">
+            <label class="form-label">Height (cm)</label>
+            <input asp-for="Height" type="number" class="form-control" />
+        </div>
+
+      
+        <div class="mb-3">
+            <label class="form-label">Do you suffer from any chronic health problems?</label>
+            <textarea asp-for="HealthProblems" class="form-control" rows="2"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">City</label>
+            <input asp-for="City" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Neighborhood</label>
+            <input asp-for="Neighborhood" class="form-control" />
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Submit Appointment</button>
+    </form>
+
+    @if (!string.IsNullOrEmpty(Model.Message))
+    {
+            <p class="text-success mt-3">@Model.Message</p>
+    }
+</div>

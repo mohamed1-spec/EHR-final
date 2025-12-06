@@ -1,0 +1,101 @@
+﻿@page
+@model EHR.Pages.DoctorHomeModel
+@{
+    ViewData["Title"] = "Doctor Dashboard";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center text-primary mb-4" data-translate="title">👨‍⚕ Doctor Dashboard</h2>
+    <h5 class="text-secondary text-center mb-4" data-translate="subtitle">List of New Appointments</h5>
+
+    @if (Model.Appointments != null && Model.Appointments.Count > 0)
+    {
+            <table class="table table-striped table-bordered shadow-sm">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th data-translate="id">Appointment ID</th>
+                        <th data-translate="patient">Patient Name</th>
+                        <th data-translate="problem">Problem Description</th>
+                        <th data-translate="department">Department</th>
+                        <th data-translate="date">Appointment Date</th>
+                        <th data-translate="status">Status</th>
+                        <th data-translate="action">Action</th> 
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var appt in Model.Appointments)
+                {
+                            <tr>
+                                <td>@appt.AppointmentID</td>
+                                <td>@appt.PatientName</td>
+                                <td>@appt.HealthIssue</td>
+                                <td>@appt.Department</td>
+                                <td>@appt.AppointmentDate.ToString("yyyy-MM-dd HH:mm")</td>
+                                <td>
+                                    <span class="badge bg-success">@appt.Status</span>
+                                </td>
+                                <td>
+                                    
+                                    <a asp-page="/DoctorViewAppointment" asp-route-id="@appt.AppointmentID" 
+                                       class="btn btn-info btn-sm">
+                                        👁 <span data-translate="view">View Details</span>
+                                    </a>
+                                </td>
+                            </tr>
+                }
+                </tbody>
+            </table>
+    }
+    else
+    {
+            <div class="alert alert-info text-center" data-translate="noAppointments">
+                No appointments available yet.
+            </div>
+    }
+
+    <div class="text-center mt-4">
+        <form method="get">
+            <button class="btn btn-primary" data-translate="refresh">🔄 Refresh List</button>
+        </form>
+    </div>
+</div>
+
+<style>
+    .container {
+        max-width: 900px;
+    }
+</style>
+
+
+<script>
+    const translations = {
+        title: { en: "👨‍⚕ Doctor Dashboard", ar: "👨‍⚕ لوحة تحكم الطبيب" },
+        subtitle: { en: "List of New Appointments", ar: "قائمة المواعيد الجديدة" },
+        id: { en: "Appointment ID", ar: "رقم الموعد" },
+        patient: { en: "Patient Name", ar: "اسم المريض" },
+        problem: { en: "Problem Description", ar: "الوصف الطبي" },
+        department: { en: "Department", ar: "القسم" },
+        date: { en: "Appointment Date", ar: "تاريخ الموعد" },
+        status: { en: "Status", ar: "الحالة" },
+        action: { en: "Action", ar: "الإجراء" },
+        view: { en: "View Details", ar: "عرض التفاصيل" },
+        refresh: { en: "🔄 Refresh List", ar: "🔄 تحديث القائمة" },
+        noAppointments: { en: "No appointments available yet.", ar: "لا توجد مواعيد حالياً." }
+    };
+
+    const lang = localStorage.getItem('siteLang') || 'en';
+    applyTranslation(lang);
+
+    function applyTranslation(lang) {
+        document.querySelectorAll('[data-translate]').forEach(el => {
+            el.innerText = translations[el.getAttribute('data-translate')][lang];
+        });
+        if (lang === 'ar') {
+            document.body.style.direction = 'rtl';
+            document.body.style.textAlign = 'right';
+        } else {
+            document.body.style.direction = 'ltr';
+            document.body.style.textAlign = 'left';
+        }
+    }
+</script>

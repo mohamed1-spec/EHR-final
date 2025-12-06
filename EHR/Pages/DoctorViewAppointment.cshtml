@@ -1,0 +1,86 @@
+﻿@page "{id:int}"
+@model EHR.Pages.DoctorViewAppointmentModel
+@{
+    ViewData["Title"] = "Appointment Details";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center text-primary mb-4">🩺 Appointment Details</h2>
+
+    <div class="card p-4 shadow-sm">
+
+        <p><strong>Patient Name:</strong> @Model.AppointmentInfo.PatientName</p>
+        <p><strong>Health Issue:</strong> @Model.AppointmentInfo.HealthDescription</p>
+        <p><strong>Department:</strong> @Model.AppointmentInfo.DeptName</p>
+        <p><strong>Age:</strong> @Model.AppointmentInfo.Age</p>
+        <p><strong>Weight:</strong> @Model.AppointmentInfo.Weight</p>
+        <p><strong>Height:</strong> @Model.AppointmentInfo.Height</p>
+        <p><strong>Health Problems:</strong> @Model.AppointmentInfo.HealthProblems</p>
+        <p><strong>City:</strong> @Model.AppointmentInfo.City</p>
+        <p><strong>Neighborhood:</strong> @Model.AppointmentInfo.Neighborhood</p>
+        <p><strong>Status:</strong> @Model.AppointmentInfo.Status</p>
+
+        <hr />
+
+        
+        <h5 class="text-warning mt-4">📅 Confirm Appointment Date</h5>
+
+        <form method="post" asp-page-handler="ConfirmAppointment">
+
+           
+            <input type="hidden" name="AppointmentInfo.AppointmentID" value="@Model.AppointmentInfo.AppointmentID" />
+            <input type="hidden" name="AppointmentInfo.PatientID" value="@Model.AppointmentInfo.PatientID" />
+            <input type="hidden" name="AppointmentInfo.DoctorID" value="@Model.AppointmentInfo.DoctorID" />
+
+            <div class="mb-3">
+                <label class="form-label">Select Visit Date & Time:</label>
+                <input type="datetime-local" name="VisitDate" class="form-control" required />
+            </div>
+
+            <button type="submit" class="btn btn-warning w-100">✅ Confirm Appointment</button>
+        </form>
+
+
+        <hr />
+
+        
+        <h5 class="text-success mt-4">🧾 Write Prescription</h5>
+
+        <form method="post" asp-page-handler="SavePrescription">
+
+          
+            <input type="hidden" asp-for="AppointmentInfo.AppointmentID" />
+            <input type="hidden" asp-for="AppointmentInfo.PatientID" />
+            <input type="hidden" asp-for="AppointmentInfo.DoctorID" />
+
+            <div class="mb-3">
+                <textarea asp-for="PrescriptionText" 
+                          class="form-control" 
+                          rows="4"
+                          placeholder="Write your medical prescription here..." 
+                          required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100">💾 Save Prescription</button>
+        </form>
+
+        
+        @if (!string.IsNullOrEmpty(Model.Message))
+        {
+                <div class="alert alert-success mt-3 text-center">
+                @Model.Message
+                </div>
+        }
+
+        <a asp-page="/DoctorHome" class="btn btn-secondary mt-3 w-100">⬅ Back to Appointments</a>
+    </div>
+</div>
+
+<style>
+    .container {
+        max-width: 700px;
+    }
+    h5 {
+        font-weight: 600;
+    }
+</style>

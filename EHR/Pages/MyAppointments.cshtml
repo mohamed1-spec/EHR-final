@@ -1,0 +1,30 @@
+﻿@page
+@model EHR.Pages.MyAppointmentsModel
+@{
+    ViewData["Title"] = "My Appointments";
+    Layout = "_Layout";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">My Previous Appointments</h2>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Department</th>
+                <th>Health Issue</th>
+                <th>Appointment Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var appointment in Model.Appointments)
+            {
+                    <tr>
+                        <td>@appointment.Department</td>
+                        <td>@appointment.HealthIssue</td>
+                        <td>@appointment.AppointmentTime.ToString("g")</td>
+                    </tr>
+            }
+        </tbody>
+    </table>
+</div>
